@@ -29,14 +29,14 @@ h1 {
     position: absolute;
     width: 34px; /* Width of the bird image */
     height: 24px; /* Height of the bird image */
-    background-image: url('../images/bird.png'); /* Path to bird image */
+    background-image: url(''); /* Path to bird image */
     background-size: cover;
 }
 
 .pipe {
     position: absolute;
     width: 52px; /* Width of the pipe image */
-    background-image: url('../images/pipe.png'); /* Path to pipe image */
+    background-image: url('image.png'); /* Path to pipe image */
     background-size: cover;
 }
 
