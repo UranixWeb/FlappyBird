@@ -11,8 +11,8 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-canvas.width = 320;
-canvas.height = 480;
+canvas.width = 1000;
+canvas.height = 500;
 
 let bird = {
     x: 50,
