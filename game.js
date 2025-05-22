@@ -152,7 +152,7 @@ function drawGameOver() {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = '#fff';
     context.font = '32px Arial';
-    context.fillText('Bobmoclat!', 70, canvas.height / 2);
+    context.fillText('Bomboclat!', 70, canvas.height / 2);
     context.font = '16px Arial';
     context.fillText('9. 11. is happening!', 60, canvas.height / 2 + 40);
 }
