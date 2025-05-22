@@ -30,7 +30,7 @@ let gameOver = false;
 let score = 0;
 
 function setup() {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('click', (e) => {
         if (gameOver) {
             resetGame();
         } else {
