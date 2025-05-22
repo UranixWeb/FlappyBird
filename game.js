@@ -137,9 +137,9 @@ function drawGameOver() {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = '#fff';
     context.font = '32px Arial';
-    context.fillText('Game Over', 70, canvas.height / 2);
+    context.fillText('Bobmoclat!', 70, canvas.height / 2);
     context.font = '16px Arial';
-    context.fillText('Press any key to restart', 60, canvas.height / 2 + 40);
+    context.fillText('9. 11. is happening!', 60, canvas.height / 2 + 40);
 }
 
 setup();
