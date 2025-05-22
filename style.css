@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #70c5ce; /* Sky color */
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 48px;
+    margin-top: 20px;
+}
+
+.game-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bird {
+    position: absolute;
+    width: 34px; /* Width of the bird image */
+    height: 24px; /* Height of the bird image */
+    background-image: url('../images/bird.png'); /* Path to bird image */
+    background-size: cover;
+}
+
+.pipe {
+    position: absolute;
+    width: 52px; /* Width of the pipe image */
+    background-image: url('../images/pipe.png'); /* Path to pipe image */
+    background-size: cover;
+}
+
+.score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #ffffff;
+}
