@@ -29,7 +29,7 @@ h1 {
     position: absolute;
     width: 34px; /* Width of the bird image */
     height: 24px; /* Height of the bird image */
-    background-image: url('plane'); /* Path to bird image */
+    background-image: url('image\ copy.png'); /* Path to bird image */
     background-size: cover;
 }
 
