@@ -27,6 +27,7 @@ let bird = {
 let pipes = [];
 let frame = 0;
 let gameOver = false;
+let score = 0;
 
 function setup() {
     document.addEventListener('keydown', (e) => {
@@ -57,6 +58,7 @@ function resetGame() {
     pipes = [];
     frame = 0;
     gameOver = false;
+    score = 0;
     loop();
 }
 
@@ -89,13 +91,15 @@ function update() {
             x: canvas.width,
             y: 0,
             width: 60,
-            height: pipeTop
+            height: pipeTop,
+            passed: false // Add a flag to track if the bird passed this pipe
         });
         pipes.push({
             x: canvas.width,
             y: pipeTop + gap,
             width: 60,
-            height: canvas.height - pipeTop - gap
+            height: canvas.height - pipeTop - gap,
+            passed: false
         });
     }
 
@@ -110,6 +114,12 @@ function update() {
             bird.y + bird.height > pipes[i].y
         ) {
             gameOver = true;
+        }
+
+        // Score: Only count the upper pipe, and only once
+        if (!pipes[i].passed && pipes[i].y === 0 && pipes[i].x + pipes[i].width < bird.x) {
+            pipes[i].passed = true;
+            score++;
         }
 
         if (pipes[i].x + pipes[i].width < 0) {
@@ -129,6 +139,11 @@ function draw() {
     for (let pipe of pipes) {
         context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height);
     }
+
+    // Draw score
+    context.fillStyle = '#fff';
+    context.font = '32px Arial';
+    context.fillText('Score: ' + score, 30, 50);
 }
 
 function drawGameOver() {
