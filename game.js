@@ -4,14 +4,21 @@ const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 document.body.appendChild(canvas);
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
 canvas.width = 320;
 canvas.height = 480;
 
 let bird = {
     x: 50,
     y: 150,
-    width: 20,
-    height: 20,
+    width: 40, // Increased for visibility on larger screens
+    height: 40,
     gravity: 0.6,
     lift: -15,
     velocity: 0
@@ -19,42 +26,82 @@ let bird = {
 
 let pipes = [];
 let frame = 0;
+let gameOver = false;
 
 function setup() {
-    document.addEventListener('keydown', () => {
-        bird.velocity += bird.lift;
+    document.addEventListener('keydown', (e) => {
+        if (gameOver) {
+            resetGame();
+        } else {
+            bird.velocity = bird.lift;
+        }
     });
     requestAnimationFrame(loop);
 }
 
 function loop() {
-    frame++;
-    update();
-    draw();
-    requestAnimationFrame(loop);
+    if (!gameOver) {
+        frame++;
+        update();
+        draw();
+        requestAnimationFrame(loop);
+    } else {
+        drawGameOver();
+    }
+}
+
+function resetGame() {
+    bird.x = 50;
+    bird.y = canvas.height / 2 - bird.height / 2;
+    bird.velocity = 0;
+    pipes = [];
+    frame = 0;
+    gameOver = false;
+    loop();
 }
 
 function update() {
     bird.velocity += bird.gravity;
     bird.y += bird.velocity;
 
-    if (bird.y > canvas.height) {
-        bird.y = canvas.height;
+    if (bird.y + bird.height > canvas.height) {
+        bird.y = canvas.height - bird.height;
+        gameOver = true;
+    }
+    if (bird.y < 0) {
+        bird.y = 0;
         bird.velocity = 0;
     }
 
     if (frame % 75 === 0) {
-        let pipeHeight = Math.random() * (canvas.height / 2);
+        let gap = canvas.height / 4;
+        let pipeTop = Math.random() * (canvas.height / 2);
         pipes.push({
             x: canvas.width,
-            y: pipeHeight,
-            width: 20,
-            height: canvas.height - pipeHeight - 100
+            y: 0,
+            width: 60,
+            height: pipeTop
+        });
+        pipes.push({
+            x: canvas.width,
+            y: pipeTop + gap,
+            width: 60,
+            height: canvas.height - pipeTop - gap
         });
     }
 
     for (let i = pipes.length - 1; i >= 0; i--) {
-        pipes[i].x -= 2;
+        pipes[i].x -= Math.max(2, canvas.width / 320 * 2);
+
+        // Collision detection
+        if (
+            bird.x < pipes[i].x + pipes[i].width &&
+            bird.x + bird.width > pipes[i].x &&
+            bird.y < pipes[i].y + pipes[i].height &&
+            bird.y + bird.height > pipes[i].y
+        ) {
+            gameOver = true;
+        }
 
         if (pipes[i].x + pipes[i].width < 0) {
             pipes.splice(i, 1);
@@ -71,9 +118,19 @@ function draw() {
 
     context.fillStyle = '#228B22';
     for (let pipe of pipes) {
-        context.fillRect(pipe.x, 0, pipe.width, pipe.y);
-        context.fillRect(pipe.x, pipe.y + pipe.height, pipe.width, canvas.height - pipe.y - pipe.height);
+        context.fillRect(pipe.x, pipe.y, pipe.width, pipe.height);
     }
+}
+
+function drawGameOver() {
+    draw();
+    context.fillStyle = 'rgba(0,0,0,0.5)';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#fff';
+    context.font = '32px Arial';
+    context.fillText('Game Over', 70, canvas.height / 2);
+    context.font = '16px Arial';
+    context.fillText('Press any key to restart', 60, canvas.height / 2 + 40);
 }
 
 setup();
