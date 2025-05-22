@@ -62,12 +62,21 @@ function resetGame() {
 
 function update() {
     bird.velocity += bird.gravity;
+
+    // Clamp velocity for max falling and flying speed
+    const maxFallSpeed = 12;
+    const maxFlySpeed = -15;
+    if (bird.velocity > maxFallSpeed) bird.velocity = maxFallSpeed;
+    if (bird.velocity < maxFlySpeed) bird.velocity = maxFlySpeed;
+
     bird.y += bird.velocity;
 
+    // Prevent bird from falling below the bottom
     if (bird.y + bird.height > canvas.height) {
         bird.y = canvas.height - bird.height;
         gameOver = true;
     }
+    // Prevent bird from going above the top
     if (bird.y < 0) {
         bird.y = 0;
         bird.velocity = 0;
