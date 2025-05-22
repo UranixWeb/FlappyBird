@@ -11,8 +11,8 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-canvas.width = 1000;
-canvas.height = 500;
+canvas.width = 10000;
+canvas.height = 800;
 
 let bird = {
     x: 50,
@@ -83,7 +83,7 @@ function update() {
     }
 
     if (frame % 75 === 0) {
-        let gap = canvas.height / 4;
+        let gap = canvas.height / 3;
         let pipeTop = Math.random() * (canvas.height / 2);
         pipes.push({
             x: canvas.width,
